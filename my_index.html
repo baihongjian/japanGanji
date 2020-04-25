@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>日语汉字难度等级测定</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+    <style>
+        .header {
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 200%;
+            color: #333;
+            margin-top: 30px;
+        }
+
+        .header p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="am-g">
+        <h1>日语汉字难度等级测试</h1>
+        <p>根据日本小学国语教科书<br/>汉语检测列表（2136字）</p>
+    </div>
+    <hr/>
+</div>
+<div class="am-g">
+    <div class="am-u-lg-10 am-u-md-10 am-u-sm-centered">
+
+        <form method="post" class="am-form">
+
+            <div class="am-form-group">
+                <label for="TC">原文</label>
+                <textarea class="" rows="7" id="TC"></textarea>
+            </div>
+
+            <div class="am-cf">
+                <input type="button" name="" onclick="doWhile()" value="测 试" class="am-btn am-btn-primary am-btn-sm am-fl">
+            </div>
+        </form>
+        <br>
+        <article id="sound" class="am-paragraph am-paragraph-default">
+
+         </article>
+
+        <button id="status" style="display: none" type="button" class="am-btn am-btn-danger">测试结束，请看测试结果！</button>
+
+        <br>
+        <details open="true">
+            <summary>测试结果</summary>
+            <div class="am-scrollable-horizontal">
+                <table class="am-table am-table-bordered am-table-striped am-text-nowrap">
+                    <tr>
+                        <td>等级</td>
+                        <td>个数</td>
+                        <td>汉字</td>
+                        <td>发音</td>
+                    </tr>
+                    <tr>
+                        <td>一年级（汉检10级）</td>
+                        <td id="level_1">0个</td>
+                        <td id="search_1"></td>
+                        <td id="sound_1"></td>
+                    </tr>
+                    <tr>
+                        <td>二年级（汉检9级）</td>
+                        <td id="level_2">0个</td>
+                        <td id="search_2"></td>
+                        <td id="sound_2"></td>
+                    </tr>
+                    <tr>
+                        <td>三年级（汉检8级）</td>
+                        <td id="level_3">0个</td>
+                        <td id="search_3"></td>
+                        <td id="sound_3"></td>
+                    </tr>
+                    <tr>
+                        <td>四年级（汉检7级）</td>
+                        <td id="level_4">0个</td>
+                        <td id="search_4"></td>
+                        <td id="sound_4"></td>
+                    </tr>
+                    <tr>
+                        <td>五年级（汉检6级）</td>
+                        <td id="level_5">0个</td>
+                        <td id="search_5"></td>
+                        <td id="sound_5"></td>
+                    </tr>
+                    <tr>
+                        <td>六年级（汉检5级）</td>
+                        <td id="level_6">0个</td>
+                        <td id="search_6"></td>
+                        <td id="sound_6"></td>
+                    </tr>
+                    <tr>
+                        <td>中学以上水平(汉检4级~1级)</td>
+                        <td id="level_S">0个</td>
+                        <td id="search_S"></td>
+                        <td id="sound_S"></td>
+                    </tr>
+
+                </table>
+            </div>
+        </details>
+        <br>
+        <!--<details>
+            <summary>原文标注</summary>
+            <p>の
+                <ruby>会社
+                    <rt>かいしゃ</rt>
+                </ruby>
+                が
+                <ruby>集
+                    <rt>あつ</rt>
+                </ruby>
+                めた
+                <ruby>携帯電話
+                    <rt>けいたいでんわ</rt>
+                </ruby>
+                ので、２
+                <ruby>月
+                    <rt>がつ</rt>
+                </ruby>
+                １５
+                <ruby>日
+                    <rt>にち</rt>
+                </ruby>
+                から４
+                <ruby>月
+                    <rt>がつ</rt>
+                </ruby>
+                <ruby>１４日
+                    <rt>じゅうよっか</rt>
+                </ruby>
+                にどのくらいの
+                <ruby>人
+                    <rt>ひと</rt>
+                </ruby>
+                が
+                <ruby>出
+                    <rt>で</rt>
+                </ruby>
+                かけたか
+                <ruby>調
+                    <rt>しら</rt>
+                </ruby>
+                べました。
+            </p>
+        </details>-->
+        <hr>
+        <p>2020年 琦玉县</p>
+    </div>
+</div>
+<script type="text/javascript">
+    function showSound(sound){
+        $("#sound").html(sound);
+    }
+    function doWhile(){
+
+        //获取测试文本
+        var text=$("#TC").val();
+        if(text=='' || text==undefined){
+            alert('测试文本不能为空！');
+            return;
+        }
+
+        //$("#status").show();
+        //$("#status").html("开始测试......");
+
+        //获取字符重复个数
+        var obj = text.split("").reduce(function (x, y) {
+            return (x[y]++ || (x[y] = 1), x);
+        }, {});
+        console.log(obj);
+        var keyArray=Object.keys(obj);
+
+        var level_1=0;level_2=0;level_3=0;level_4=0;level_5=0;level_6=0;level_S=0;
+
+        var search_1="";search_2="";search_3="";search_4="";search_5="";search_6="";search_S="";
+
+        var sound_1="";sound_2="";sound_2="";sound_3="";sound_4="";sound_5="";sound_6="";sound_S="";
+
+        //var searchObject=jF('*[ganji=東]',ganJiList).get();
+
+        for(var i=0;i<keyArray.length;i++){
+            var sql = "*[ganji="+keyArray[i]+"]";
+            var searchObject=jF(sql,ganJiList).get();
+            //var searchObject=jF("*[ganji=愛]",ganJiList).get();
+            if(searchObject.length!=0){
+                if(searchObject[0].level=="1"){
+                    level_1=level_1+1;
+                    //search_1=+search_1+"<span onclick='showSound("+searchObject[0].sound+")'>"+searchObject[0].ganji+"</span>,"
+                    search_1=search_1+searchObject[0].ganji+"<br/>";
+                    sound_1=sound_1+searchObject[0].sound+"<br/>";
+                }
+                if(searchObject[0].level=="2"){
+                    level_2=level_2+1;
+                    search_2=search_2+searchObject[0].ganji+"<br/>";
+                    sound_2=sound_2+searchObject[0].sound+"<br/>";
+                }
+                if(searchObject[0].level=="3"){
+                    level_3=level_3+1;
+                    search_3=search_3+searchObject[0].ganji+"<br/>";
+                    sound_3=sound_3+searchObject[0].sound+"<br/>";
+                }
+                if(searchObject[0].level=="4"){
+                    level_4=level_4+1;
+                    search_4=search_4+searchObject[0].ganji+"<br/>";
+                    sound_4=sound_4+searchObject[0].sound+"<br/>";
+                }
+                if(searchObject[0].level=="5"){
+                    level_5=level_5+1;
+                    search_5=search_5+searchObject[0].ganji+"<br/>";
+                    sound_5=sound_5+searchObject[0].sound+"<br/>";
+                }
+                if(searchObject[0].level=="6"){
+                    level_6=level_6+1;
+                    search_6=search_6+searchObject[0].ganji+"<br/>";
+                    sound_6=sound_6+searchObject[0].sound+"<br/>";
+                }
+                if(searchObject[0].level=="S"){
+                    level_S=level_S+1;
+                    search_S=search_S+searchObject[0].ganji+"<br/>";
+                    sound_S=sound_S+searchObject[0].sound+"<br/>";
+                }
+            }
+        }
+        console.log(level_1);
+        console.log(level_2);
+        console.log(level_3);
+        console.log(level_4);
+        console.log(level_5);
+        console.log(level_6);
+        console.log(level_S);
+        $("#level_1").html(level_1);
+        $("#level_2").html(level_2);
+        $("#level_3").html(level_3);
+        $("#level_4").html(level_4);
+        $("#level_5").html(level_5);
+        $("#level_6").html(level_6);
+        $("#level_S").html(level_S);
+
+        $("#search_1").html(search_1);
+        $("#search_2").html(search_2);
+        $("#search_3").html(search_3);
+        $("#search_4").html(search_4);
+        $("#search_5").html(search_5);
+        $("#search_6").html(search_6);
+        $("#search_S").html(search_S);
+
+        $("#sound_1").html(sound_1);
+        $("#sound_2").html(sound_2);
+        $("#sound_3").html(sound_3);
+        $("#sound_4").html(sound_4);
+        $("#sound_5").html(sound_5);
+        $("#sound_6").html(sound_6);
+        $("#sound_S").html(sound_S);
+
+
+        $("#status").show().delay(3000).fadeOut();
+
+    }
+</script>
+<script type="text/javascript" src="js/jfunk.js"></script>
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+
+</body>
+</html>
